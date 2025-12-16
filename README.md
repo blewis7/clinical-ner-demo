@@ -29,14 +29,14 @@ All data used in this project is synthetic and intentionally clean to focus on p
 
 High-level pipeline:
 
-Synthetic Data Generation
-↓
-Preprocessing & Label Alignment
-↓
-Model Training
-↓
-Inference Pipeline
-↓
+Synthetic Data Generation  
+↓  
+Preprocessing & Label Alignment  
+↓  
+Model Training  
+↓  
+Inference Pipeline  
+↓  
 Visualization (Streamlit)
 
 Each stage is implemented as a separate, reusable component.
@@ -45,10 +45,10 @@ Each stage is implemented as a separate, reusable component.
 
 1. Data Generation Pipeline
 
-Purpose:
+Purpose:  
 Create realistic, labeled clinical notes without using real patient data.
 
-Script:
+Script:  
 src/data_prep/make_synthetic_notes.py
 
 Output:
@@ -64,10 +64,10 @@ Why this step exists:
 
 ### 2. Preprocessing Pipeline
 
-Purpose:
+Purpose:  
 Normalize raw synthetic notes into a format suitable for model training.
 
-Script:
+Script:  
 src/data_prep/preprocess_with_pandas.py
 
 Responsibilities:
@@ -78,22 +78,22 @@ Responsibilities:
 - Align token-level BIO tags
 - Convert data into Hugging Face Dataset format
 
-Output structure:
-data/processed/
-├── ner/
+Output structure:  
+data/processed/  
+├── ner/  
 └── sections/
 
 ### 3. Training Pipelines
 
 #### A. NER Training Pipeline
 
-Script:
+Script:  
 src/models/train_ner.py
 
-Steps:
-Load processed dataset
-→ Tokenize with BERT tokenizer
-→ Align labels with subword tokens
+Steps:  
+Load processed dataset  
+→ Tokenize with BERT tokenizer  
+→ Align labels with subword tokens  
 → Fine-tune BERT for token classification
 → Evaluate (F1 score)
 → Save trained model
@@ -106,35 +106,35 @@ AutoModelForTokenClassification
 Script:
 src/models/train_sections.py
 
-Steps:
-Load processed dataset
-→ Tokenize line text
-→ Fine-tune BERT for sequence classification
-→ Evaluate (accuracy / macro-F1)
+Steps:  
+Load processed dataset  
+→ Tokenize line text  
+→ Fine-tune BERT for sequence classification  
+→ Evaluate (accuracy / macro-F1)  
 → Save trained model
 
-Model type:
+Model type:  
 AutoModelForSequenceClassification
 
 ### 4. Inference Pipeline
 
-Script:
+Script:  
 src/inference/infer.py
 
-Steps (per note):
-Raw clinical text
-→ Split into lines
-→ Section classifier (per line)
-→ NER model (per line)
-→ Post-processing (merge subword spans)
+Steps (per note):  
+Raw clinical text  
+→ Split into lines  
+→ Section classifier (per line)  
+→ NER model (per line)  
+→ Post-processing (merge subword spans)  
 → Structured output
 
 ### 5. Visualization Pipeline (Streamlit App)
 
-Script:
+Script:  
 app/app.py
 
-Purpose:
+Purpose:  
 Interactive demo of the inference pipeline with human-readable outputs.
 
 Features:
@@ -146,16 +146,16 @@ Features:
 
 ## SETUP
 
-python -m venv .venv
-source .venv/bin/activate (Windows: .venv\Scripts\activate)
+python -m venv .venv  
+source .venv/bin/activate (Windows: .venv\Scripts\activate)  
 pip install -r requirements.txt
 
 ## RUN ORDER
 
-python src/data_prep/make_synthetic_notes.py
-python src/data_prep/preprocess_with_pandas.py
-python src/models/train_ner.py
-python src/models/train_sections.py
+python src/data_prep/make_synthetic_notes.py  
+python src/data_prep/preprocess_with_pandas.py  
+python src/models/train_ner.py  
+python src/models/train_sections.py  
 streamlit run app/app.py
 
 ## DESIGN NOTES
