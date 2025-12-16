@@ -43,7 +43,7 @@ Each stage is implemented as a separate, reusable component.
 
 ## PIPELINE BREAKDOWN
 
-1. Data Generation Pipeline
+### 1. Data Generation Pipeline
 
 Purpose:  
 Create realistic, labeled clinical notes without using real patient data.
